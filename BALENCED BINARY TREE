@@ -1,0 +1,65 @@
+
+
+
+class Solution:
+    def isBalanced(self, root: Optional[TreeNode]) -> bool:
+                                                                                                    # find recurrsive dfs hieght of left subtree 
+                                                                                                    # find recurrsive dfs hieght of right subtree 
+                                                                                                    # difference between them is <=1 ------------------> O(n*2)
+
+                                                                                                    # so we are going to leaf node and evaluating from there :
+        def dfs(root):
+            if not root:
+                return True , 0
+            left,right = dfs(root.left),dfs(root.right) # call dfs recursively
+            balance = (left[0] and right[0] and abs(left[1] - right[1] ) <=1)                       # LEFT[0],RIGHT[0] ARE BOOLEAN , ABS() calculating height difference => 
+            return [balanced, 1 + max(left[1] , right[1])]                                          # return True ,1 like this
+        return dfs(root)[0]                                                                         # Finally, isBalanced(root) returns True, indicating that the tree is balanced.
+
+EXAMPLE :
+    1
+   / \
+  2   3
+ / \
+4   5
+Tree Structure:
+root is 1
+root.left is 2
+root.right is 3
+root.left.left is 4
+root.left.right is 5
+Step-by-Step Execution:
+Start at the root (node 1):
+
+Call dfs on the left subtree (2).
+Call dfs on the right subtree (3).
+For node 2:
+
+Call dfs on the left subtree (4).
+Call dfs on the right subtree (5).
+For node 4 (leaf node):
+
+dfs(None) returns (True, 0) for both left and right subtrees.
+                                                                       Balance check: True and True and abs(0 - 0) <= 1 → True
+Height: 1 + max(0, 0) → 1
+Return (True, 1).
+For node 5 (leaf node):
+
+Similar to node 4, return (True, 1).
+For node 2:
+
+Left subtree (4): (True, 1)
+Right subtree (5): (True, 1)
+                                                                      Balance check: True and True and abs(1 - 1) <= 1 → True
+Height: 1 + max(1, 1) → 2
+Return (True, 2).
+For node 3 (leaf node):
+
+Similar to node 4, return (True, 1).
+For root node 1:
+
+Left subtree (2): (True, 2)
+Right subtree (3): (True, 1)
+                                                                      Balance check: True and True and abs(2 - 1) <= 1 → True
+Height: 1 + max(2, 1) → 3
+Return (True, 3).
