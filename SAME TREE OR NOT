@@ -1,0 +1,29 @@
+Input: p = [1,2,3], q = [1,2,3]
+
+Output: true
+
+Input: p = [4,7], q = [4,null,7]
+
+Output: false
+
+    4                 
+     \
+      7
+    4
+   /
+  7
+Both are not same
+
+# check root nodes are same or not , if not return False
+# check for child's =>  node(non-Null) == Null or Null == node ----> return False
+# if both values are non-Null then check values same or not , return True
+
+
+class Solution:
+    def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
+        if not p and not q:              # empty trees
+           return True
+        if p and q and p.val == q.val:
+           return self.isSameTree(p.left,q.left) and self.isSameTree(p.right,q.right)                              # and operator results boolean true if T ^ T = T
+        else:
+            return False
