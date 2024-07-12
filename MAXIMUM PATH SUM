@@ -1,0 +1,27 @@
+       1
+      / \
+     2   3
+    / \
+   4   5
+
+Input: root = [1,2,3]
+
+Output: 6
+
+def maxPathSum(self, root: Optional[TreeNode]) -> int:
+        res = [root.val]
+
+        def dfs(root):
+            if not root:
+                return 0
+            
+            leftMax = dfs(root.left)
+            rightMax = dfs(root.right)
+            leftMax = max(leftMax,0)
+            rightMax = max(rightMax,0)
+
+            res[0]=max(res[0], root.val+leftMax+rightMax)                                # clac sum of sub trees
+            return root.val+max(leftMax,rightMax)                                        # maximum path sum including the current node and the larger of the sums from either the left or right subtree.
+        dfs(root)                                                                        # This function call starts the depth-first search (DFS) traversal of the tree from the root node.
+        return res[0]                                                                    # After the DFS traversal is complete, res[0] holds the maximum path sum for the entire tree.
+            
